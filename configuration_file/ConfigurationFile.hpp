@@ -15,7 +15,7 @@
 
 class ConfigurationFile
 {
-    private:
+    protected:
         std::string _path;
         std::shared_ptr<ParserInterface> _parser;
 
