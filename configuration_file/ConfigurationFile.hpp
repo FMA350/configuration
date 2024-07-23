@@ -3,9 +3,8 @@
  *
  * Copyright (c) 2024 Moneta Software
  */
-
+#pragma once
 #include <string>
-#include <sstream>
 #include <vector>
 #include <map>
 #include <memory>
@@ -24,7 +23,7 @@ class ConfigurationFile
         map_of_maps _internalRepresentation;
 
     public:
-        ConfigurationFile(std::string p) : _path(p){};
+        ConfigurationFile(std::string);
         void read();
         void write();
 };

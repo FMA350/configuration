@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2024 Moneta Software
  */
+#pragma once
 
 #include <sstream>
 #include <map>

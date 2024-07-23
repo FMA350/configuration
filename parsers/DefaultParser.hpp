@@ -3,6 +3,8 @@
  *
  * Copyright (c) 2024 Moneta Software
  */
+#pragma once
+
 #include <map>
 #include <vector>
 #include <ParserInterface.hpp>

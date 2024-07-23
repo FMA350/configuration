@@ -1,8 +1,14 @@
-#include <ConfigurationFile.hpp>
 #include <fstream>
 #include <exception>
 #include <stdexcept>
 #include <sstream>
+#include <ConfigurationFile.hpp>
+#include <DefaultParser.hpp>
+
+ConfigurationFile::ConfigurationFile(std::string path): _path(path)
+{
+    _parser = std::make_shared<DefaultParser>();
+};
 
 void ConfigurationFile::read()
 {

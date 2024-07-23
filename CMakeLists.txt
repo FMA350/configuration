@@ -7,7 +7,10 @@ include_directories(test)
 
 file(GLOB load_and_save_SRC
      "configuration_file/ConfigurationFile.cpp"  
-     "configuration_file/ConfigurationFile.hpp" 
+     "configuration_file/ConfigurationFile.hpp"
+     "parsers/DefaultParser.cpp"
+     "parsers/DefaultParser.hpp"
+     "parsers/ParserInterface.hpp"
      "tests/load_and_save.cpp"
 )
 

@@ -4,6 +4,7 @@
  * Copyright (c) 2024 Moneta Software
  */
 #include <DefaultParser.hpp>
+#include <iostream>
 
 bool DefaultParser::isComment(const std::string& s)
 {
@@ -78,11 +79,12 @@ std::stringstream DefaultParser::serialize(const std::pair<insertion_vector, map
         if(isSection(s))
         {
             ss << s << std::endl;
-            section = s.substr(1,s.size()-1);
+            section = s.substr(1,s.size()-2);
             continue;
         }
         // is a key value pair
         auto m = data.second;
+
         ss << s+":"+m[section][s] << std::endl;
         continue;
     }
