@@ -8,6 +8,9 @@ int main(int argc, char* argv[])
     try
     {
         c.read();
+        std::cout << "[section][key2] values is: " << c.get("section","key2") << "\n";
+        c.set("section","key2", "512");
+        std::cout << "[section][key2] values is now: " << c.get("section","key2") << "\n";
         c.write();
     }
     catch(const std::exception& e)

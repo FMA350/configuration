@@ -21,9 +21,9 @@ class Configuration
         insertion_vector _insertionMetaMap; 
         map_of_maps _internalRepresentation;
     public:
-        std::string get(std::string section, std::string parameterName);
+        std::string get(std::string section, std::string key);
         // TODO: implement
         // std::vector<std::string> getSection(std::string section); 
-        bool set(std::string section, std::string parameterName, std::string value);
+        bool set(std::string section, std::string key, std::string value);
 
 };
