@@ -2,26 +2,19 @@ cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 project(configuration_reader LANGUAGES CXX)
 
 include_directories(configuration_file)
+include_directories(configuration)
 include_directories(parsers)
 include_directories(test)
 
 file(GLOB load_and_save_SRC
+     "configuration/Configuration.cpp"
+     "configuration/Configuration.hpp"
      "configuration_file/ConfigurationFile.cpp"  
      "configuration_file/ConfigurationFile.hpp"
      "parsers/DefaultParser.cpp"
      "parsers/DefaultParser.hpp"
      "parsers/ParserInterface.hpp"
      "tests/load_and_save.cpp"
-)
-
-
-file(GLOB print_and_modify_SRC
-     "configuration_file/ConfigurationFile.cpp"  
-     "configuration_file/ConfigurationFile.hpp"
-     "parsers/DefaultParser.cpp"
-     "parsers/DefaultParser.hpp"
-     "parsers/ParserInterface.hpp"
-     "tests/print_and_modify.cpp"
 )
 
 

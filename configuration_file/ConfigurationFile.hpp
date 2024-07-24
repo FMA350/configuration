@@ -10,17 +10,15 @@
 #include <memory>
 
 #include <ParserInterface.hpp>
+#include <Configuration.hpp>
+
 
 // in charge of loading and saving a file
-
-class ConfigurationFile
+class ConfigurationFile : public Configuration
 {
     protected:
         std::string _path;
         std::shared_ptr<ParserInterface> _parser;
-
-        insertion_vector _insertionMetaMap;
-        map_of_maps _internalRepresentation;
 
     public:
         ConfigurationFile(std::string);

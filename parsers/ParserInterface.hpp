@@ -4,16 +4,8 @@
  * Copyright (c) 2024 Moneta Software
  */
 #pragma once
-
-#include <sstream>
-#include <map>
-
-#define default_section "default";
-using map_of_maps = std::map<std::string, std::map<std::string, std::string>>;
-using insertion_vector = std::vector<std::string>;
-
-// Takes a stringstream in input and ensures 
-// template<class T>
+#include <Configuration.hpp>
+// In charge of turning sstrings into data and data into sstrings
 class ParserInterface
 {
 public:

@@ -5,13 +5,21 @@
  * Copyright (c) 2024 Moneta Software
  */
 #pragma once
-#include <string>
-#include <ConfigurationFile.hpp>
 
-class Configuration : ConfigurationFile
+#include <string>
+#include <sstream>
+#include <map>
+#include<vector>
+
+#define default_section "default";
+using map_of_maps = std::map<std::string, std::map<std::string, std::string>>;
+using insertion_vector = std::vector<std::string>;
+
+class Configuration
 {
-    private:
-        
+    protected:
+        insertion_vector _insertionMetaMap; 
+        map_of_maps _internalRepresentation;
     public:
         std::string get(std::string section, std::string parameterName);
         // TODO: implement
