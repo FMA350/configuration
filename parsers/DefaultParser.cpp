@@ -4,6 +4,7 @@
  * Copyright (c) 2024 Moneta Software
  */
 #include <DefaultParser.hpp>
+#include <sstream>
 #include <iostream>
 
 bool DefaultParser::isComment(const std::string& s)
