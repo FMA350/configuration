@@ -85,7 +85,6 @@ std::stringstream DefaultParser::serialize(const std::pair<insertion_vector, map
         }
         // is a key value pair
         auto m = data.second;
-
         ss << s+":"+m[section][s] << std::endl;
         continue;
     }

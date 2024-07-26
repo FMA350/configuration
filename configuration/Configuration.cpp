@@ -5,40 +5,57 @@
  */
 
 #include <Configuration.hpp>
+#include <iostream>
 
 
 std::pair<insertion_vector::iterator,insertion_vector::iterator> Configuration::_getSectionIterators(std::string section)
 {
     insertion_vector::iterator b,e;
-    for(auto it = _insertionMetaMap.begin(); it != _insertionMetaMap.end(); ++it)
-    // for(auto&v: _insertionMetaMap)
+    auto ds =  default_section;
+    if(section == ds)
     {
-        if(*it == "["+section+"]")
+        b = _insertionMetaMap.begin();
+    }
+    else 
+    {
+        std::cout << "looking for " << section << std::endl;
+        for(auto it = _insertionMetaMap.begin(); it != _insertionMetaMap.end(); ++it)
         {
-            b = it;
-            break;
+            if(*it == "["+section+"]")
+            {
+                std::cout <<"FOUND:"<< *it << std::endl;
+                b = it;
+                break;
+            }
         }
     }
     // Guard if b has not been set
     if(*b == "")
     {
+        // TODO: maybe throw error?
         return {};
     }
-    
+    e = _insertionMetaMap.end();
     // Find next section or end
-    for(auto it = b; it != _insertionMetaMap.end(); ++it)
+    // for(auto it = _insertionMetaMap.begin(); it != _insertionMetaMap.end(); it++)
+    for(auto it = std::next(b); it != _insertionMetaMap.end(); it++)
     {
+        std::cout << "it: " << *it << std::endl;
         if((*it)[0] == '[')
         {
             e = it;
             break;
+            std::cout << "found"<< std::endl;
+        }
+        if(it == _insertionMetaMap.end())
+        {
+            std::cout << "bad"<< std::endl;
+
         }
     }
+    
+    std::cout << "B: " << *b << ", E: " << *e << "\n";
 
-    if(*e == "")
-    {
-        e = _insertionMetaMap.end();
-    }
     return {b,e};
 }
 
@@ -48,18 +65,14 @@ std::string Configuration::get(std::string section, std::string key)
     return _internalRepresentation[section][key];
 }
 
-
-
-
-
 std::list<std::string> Configuration::getKeysInSection(std::string section)
 {
     // find the beginning of the section
     // Then go till next section or the end.
     // Remove every comment or empty line
 
-    auto p = _getSectionIterators(section);
-    auto sublist = std::list<std::string>(p.first,p.second);
+    auto [s,e]= _getSectionIterators(section);
+    auto sublist = std::list<std::string>(s,e);
     // Clean from comments and empty lines
     for(auto it = sublist.begin(); it != sublist.end(); )
     {
@@ -91,14 +104,19 @@ bool Configuration::set(std::string section, std::string key, std::string value)
         if(existingSection)
         {
             _internalRepresentation[section][key] = value;
+            auto [s, end] = _getSectionIterators(section);
+            std::cout << " s =" << *s << " end " << *end << "\n";
+            _insertionMetaMap.insert(end, key);
             
         }
         // If new section, create map, add value, then create section and value in the vector at the end.
         else
         {
             _internalRepresentation[section] = std::map<std::string, std::string>();
+            _internalRepresentation[section][key] = value;
+            std::cout << _internalRepresentation[section][key];
             _insertionMetaMap.push_back("["+section+"]");
-            _insertionMetaMap.push_back("key");
+            _insertionMetaMap.push_back(key);
         }
         return false; 
     }
