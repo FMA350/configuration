@@ -7,11 +7,11 @@
 
 #include <string>
 #include <map>
-#include<list>
+#include<vector>
+#define default_section "default"
 
-#define default_section "default";
 using map_of_maps = std::map<std::string, std::map<std::string, std::string>>;
-using insertion_vector = std::list<std::string>;
+using insertion_vector = std::vector<std::string>;
 
 class Configuration
 {
@@ -19,7 +19,7 @@ class Configuration
         std::pair<insertion_vector::iterator,insertion_vector::iterator> _getSectionIterators(std::string section);
 
     protected:
-        insertion_vector _insertionMetaMap; 
+        insertion_vector _insertionMetaMap;
         map_of_maps _internalRepresentation;
     public:
         // Get value of a variable

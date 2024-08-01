@@ -11,68 +11,60 @@
 std::pair<insertion_vector::iterator,insertion_vector::iterator> Configuration::_getSectionIterators(std::string section)
 {
     insertion_vector::iterator b,e;
-    auto ds =  default_section;
-    if(section == ds)
+
+    bool beginninggFound = false;
+    bool endFound = false;
+    if(section == default_section)
     {
+        std::cout << "Found the beginning as default at begin()"  << std::endl;
         b = _insertionMetaMap.begin();
+        beginninggFound = true;
     }
-    else 
+
+    for(int i = 0; i < _insertionMetaMap.size(); i++)
     {
-        std::cout << "looking for " << section << std::endl;
-        for(auto it = _insertionMetaMap.begin(); it != _insertionMetaMap.end(); ++it)
+        if(beginninggFound)
         {
-            if(*it == "["+section+"]")
+            if( _insertionMetaMap[i] != *b && _insertionMetaMap[i][0] == '[')
             {
-                std::cout <<"FOUND:"<< *it << std::endl;
-                b = it;
+                // found the end
+                e = _insertionMetaMap.begin() + i;
+                endFound = true;
                 break;
             }
         }
-    }
-    // Guard if b has not been set
-    if(*b == "")
-    {
-        // TODO: maybe throw error?
-        return {};
-    }
-    e = _insertionMetaMap.end();
-    // Find next section or end
-    // for(auto it = _insertionMetaMap.begin(); it != _insertionMetaMap.end(); it++)
-    for(auto it = std::next(b); it != _insertionMetaMap.end(); it++)
-    {
-        std::cout << "it: " << *it << std::endl;
-        if((*it)[0] == '[')
+        else
         {
-            e = it;
-            break;
-            std::cout << "found"<< std::endl;
-        }
-        if(it == _insertionMetaMap.end())
-        {
-            std::cout << "bad"<< std::endl;
+            if( _insertionMetaMap[i] == "["+section+"]" && _insertionMetaMap[i][0] == '[')
+            {
+                // found the beginning
+                beginninggFound = true;
+                b = _insertionMetaMap.begin() + i;
+            }
 
         }
     }
-    
-    std::cout << "B: " << *b << ", E: " << *e << "\n";
-
+    if(beginninggFound && !endFound)
+    {
+        // end must be last element of the vector
+        e = _insertionMetaMap.end() - 1;
+    }
     return {b,e};
 }
-
 
 std::string Configuration::get(std::string section, std::string key)
 {
     return _internalRepresentation[section][key];
 }
 
-std::list<std::string> Configuration::getKeysInSection(std::string section)
+insertion_vector Configuration::getKeysInSection(std::string section)
 {
     // find the beginning of the section
     // Then go till next section or the end.
     // Remove every comment or empty line
 
     auto [s,e]= _getSectionIterators(section);
-    auto sublist = std::list<std::string>(s,e);
+    auto sublist = insertion_vector(s,e);
     // Clean from comments and empty lines
     for(auto it = sublist.begin(); it != sublist.end(); )
     {
@@ -80,7 +72,7 @@ std::list<std::string> Configuration::getKeysInSection(std::string section)
         {
             it = sublist.erase(it);
         }
-        else 
+        else
         {
             ++it;
         }
@@ -94,7 +86,7 @@ bool Configuration::set(std::string section, std::string key, std::string value)
     bool existingValue =_internalRepresentation[section].find(key) != _internalRepresentation[section].end();
     if( existingSection && existingValue )
     {
-        // exists and it's a simple update 
+        // exists and it's a simple update
         _internalRepresentation[section][key] = value;
         return true;
     }
@@ -107,7 +99,7 @@ bool Configuration::set(std::string section, std::string key, std::string value)
             auto [s, end] = _getSectionIterators(section);
             std::cout << " s =" << *s << " end " << *end << "\n";
             _insertionMetaMap.insert(end, key);
-            
+
         }
         // If new section, create map, add value, then create section and value in the vector at the end.
         else
@@ -118,6 +110,6 @@ bool Configuration::set(std::string section, std::string key, std::string value)
             _insertionMetaMap.push_back("["+section+"]");
             _insertionMetaMap.push_back(key);
         }
-        return false; 
+        return false;
     }
 }
