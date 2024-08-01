@@ -5,7 +5,6 @@
  */
 
 #include <Configuration.hpp>
-#include <iostream>
 
 
 std::pair<insertion_vector::iterator,insertion_vector::iterator> Configuration::_getSectionIterators(std::string section)
@@ -16,7 +15,6 @@ std::pair<insertion_vector::iterator,insertion_vector::iterator> Configuration::
     bool endFound = false;
     if(section == default_section)
     {
-        std::cout << "Found the beginning as default at begin()"  << std::endl;
         b = _insertionMetaMap.begin();
         beginninggFound = true;
     }
@@ -97,7 +95,6 @@ bool Configuration::set(std::string section, std::string key, std::string value)
         {
             _internalRepresentation[section][key] = value;
             auto [s, end] = _getSectionIterators(section);
-            std::cout << " s =" << *s << " end " << *end << "\n";
             _insertionMetaMap.insert(end, key);
 
         }
@@ -106,7 +103,6 @@ bool Configuration::set(std::string section, std::string key, std::string value)
         {
             _internalRepresentation[section] = std::map<std::string, std::string>();
             _internalRepresentation[section][key] = value;
-            std::cout << _internalRepresentation[section][key];
             _insertionMetaMap.push_back("["+section+"]");
             _insertionMetaMap.push_back(key);
         }

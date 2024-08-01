@@ -5,7 +5,6 @@
  */
 #include <DefaultParser.hpp>
 #include <sstream>
-#include <iostream>
 
 bool DefaultParser::isComment(const std::string& s)
 {
@@ -19,7 +18,7 @@ bool DefaultParser::isSection(const std::string& s)
 
 bool DefaultParser::isKeyValuePair(const std::string& s)
 {
-    return s.find(':') != s.npos; 
+    return s.find(':') != s.npos;
 }
 
 std::pair<insertion_vector, map_of_maps> DefaultParser::deserialize(const std::stringstream& ss)
@@ -29,10 +28,10 @@ std::pair<insertion_vector, map_of_maps> DefaultParser::deserialize(const std::s
 
     std::string current;
     std::string section = default_section;
-    
+
     // Create default section
     map_data[section] = std::map<std::string, std::string>();
-    
+
     auto copy = std::stringstream(ss.str());
     while( std::getline(copy,current))
     {

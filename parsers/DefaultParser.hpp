@@ -5,8 +5,6 @@
  */
 #pragma once
 
-#include <map>
-#include <vector>
 #include <ParserInterface.hpp>
 
 class DefaultParser : public ParserInterface

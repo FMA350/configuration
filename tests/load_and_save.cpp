@@ -9,8 +9,8 @@ int main(int argc, char* argv[])
     {
         c.read();
         std::cout << "[section][key2] values is: " << c.get("section","key2") << "\n";
-        // c.set("section","key2", "512");
-        // std::cout << "[section][key2] values is now: " << c.get("section","key2") << "\n";
+        c.set("section","key2", "512");
+        std::cout << "[section][key2] values is now: " << c.get("section","key2") << "\n";
         c.set("section", "newKey","newVar");
         c.set("extra", "newKey2","newVar2");
         c.write();
